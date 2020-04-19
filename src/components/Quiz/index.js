@@ -38,7 +38,7 @@
 
 // **********************************************************
 
-import React, { useState, PropTypes } from 'react';
+import React, { useState } from 'react';
 
 import QuestionDisplay from '../QuestionDisplay/index';
 
@@ -50,65 +50,37 @@ const questions = [
   '5. What annoys you the most?',
 ];
 
+//CATEGORIES FOR EACH ANSWER ARRAY:
+//index 0 = animals
+//index 1 = environment
+//index 2 = localGroups
+//index 3 = events
+
 const answers = [
-  {
-    q1: [
-      { animals: 'Spending some quality time with my pet' },
-      {
-        environment:
-          'A scenic stroll at a national park, with the occasional stop to pick up litter',
-      },
-      {
-        localGroups:
-          'A picnic lunch in the park and then an afternoon tending a community garden',
-      },
-      { events: 'A cool new music festival with my friends' },
-    ],
-  },
-  {
-    q2: [
-      { animals: 'Marley and Me' },
-      { environment: 'Planet Earth' },
-      { localGroups: 'The Full Monty' },
-      { events: 'This Is Spinal Tap' },
-    ],
-  },
-  {
-    q3: [
-      { animals: 'Who Let the Dogs Out?' },
-      { environment: 'Under the Sea' },
-      { localGroups: 'YMCA' },
-      { events: 'Cabaret' },
-    ],
-  },
-  {
-    q4: [
-      {
-        animals:
-          'In the Sierra Madre mountains, taking in the spectacle of the monarch butterfly migration',
-      },
-      { environment: 'A breathtaking kayak down the Norwegian fjords' },
-      { localGroups: 'Dressed to the nines a glamorous charity ball' },
-      { events: 'Down the front at the Glastonbury Pyramid stage' },
-    ],
-  },
-  {
-    q5: [
-      {
-        animals:
-          'People forgetting that a pet is for life, not just for Christmas',
-      },
-      {
-        environment:
-          'Seeing someone drop chewing gum on the ground when the bin is. Right. There!',
-      },
-      {
-        localGroups:
-          'Seeing empty storefronts where there used to be cool local spots',
-      },
-      { events: 'Tall people blocking my view at an absolute dream gig' },
-    ],
-  },
+  [
+    'Spending some quality time with my pet',
+    'A scenic stroll at a national park, with the occasional stop to pick up litter',
+    'A picnic lunch in the park and then an afternoon tending a community garden',
+    'A cool new music festival with my friends',
+  ],
+
+  ['Marley and Me', 'Planet Earth', 'The Full Monty', 'This Is Spinal Tap'],
+
+  ['Who Let the Dogs Out?', 'Under the Sea', 'YMCA', 'Cabaret'],
+
+  [
+    'In the Sierra Madre mountains, taking in the spectacle of the monarch butterfly migration',
+    'A breathtaking kayak down the Norwegian fjords',
+    'Dressed to the nines a glamorous charity ball',
+    'Down the front at the Glastonbury Pyramid stage',
+  ],
+
+  [
+    'People forgetting that a pet is for life, not just for Christmas',
+    'Seeing someone drop chewing gum on the ground when the bin is. Right. There!',
+    'Seeing empty storefronts where there used to be cool local spots',
+    'Tall people blocking my view at an absolute dream gig',
+  ],
 ];
 
 function Quiz() {
@@ -121,13 +93,11 @@ function Quiz() {
 
   return (
     <div>
-      {questions.map((question) => (
-        <QuestionDisplay question={question} />
+      {questions.map((question, i) => (
+        <QuestionDisplay question={question} answers={answers} i={i} key={i} />
       ))}
     </div>
   );
 }
-
-Quiz.propTypes = {};
 
 export default Quiz;
