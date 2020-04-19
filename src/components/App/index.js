@@ -16,23 +16,31 @@ function App() {
       )}
 
       {highestCat === 'animals' && (
-        <h1>Replace me with the component for the animals category page!</h1>
+        <h1>
+          You matched to the animals category! This is a placeholder page which
+          will be replaced with the organisations that fit this category.
+        </h1>
       )}
 
       {highestCat === 'environment' && (
         <h1>
-          Replace me with the component for the environment category page!
+          You matched to the environment category! This is a placeholder page
+          which will be replaced with the organisations that fit this category.
         </h1>
       )}
 
       {highestCat === 'localGroups' && (
         <h1>
-          Replace me with the component for the localGroups category page!
+          You matched to the local groups category! This is a placeholder page
+          which will be replaced with the organisations that fit this category.
         </h1>
       )}
 
       {highestCat === 'events' && (
-        <h1>Replace me with the component for the events category page!</h1>
+        <h1>
+          You matched to the events category! This is a placeholder page which
+          will be replaced with the organisations that fit this category.
+        </h1>
       )}
     </div>
   );

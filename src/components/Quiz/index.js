@@ -29,17 +29,15 @@
 //TODO: Reducer function for onClick event when answer choice is clicked: should access answer category and set that to the end of the results array (with the rest of the array spread out) ✅
 //TODO: Hand reducer's dispatch down through to answer choice via a function executed onClick ✅
 
-//TODO: Make submit button for end of quiz ✅
 //TODO: Create function to count choices after all questions are answered and return category with the highest total ✅
-//TODO: Tie this function to submit button ✅
-//TODO: Once submit button is pressed, stop showing the quiz and switch to the resulting category's page instead
+//TODO: Deploy this function once the last question is answered ✅
 
 //---MAPCEPTION:---
 
 //TODO: Render list of each question (map over question array and render value of each object) ✅
 //TODO: Map over question array to display each question ✅
 //TODO: Map over answer choices to display each choice (with category number) ✅
-//TODO: Once the map functions above are working, add a questionNumber state and conditional render to show one question at a time
+//TODO: Once the map functions above are working, add a questionNumber state and conditional render to show one question at a time ✅
 
 // **********************************************************
 
@@ -73,7 +71,10 @@ function Quiz({ setHighestCat, setQuizOver }) {
   //useReducer that adds the category of each answer:
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  //function that adds the category and then counts the answer:
+  //state that tracks which question to display:
+  const [questionToShow, setQuestionToShow] = useState(0);
+
+  //function that adds the category and then counts the answer (and, once questionToShow reaches 4, triggers calculateResults):
   function handleClick(category) {
     if (category === 0) {
       dispatch({ type: 'add-animal-choice' });
@@ -88,6 +89,9 @@ function Quiz({ setHighestCat, setQuizOver }) {
       dispatch({ type: 'add-events-choice' });
     }
     console.log(state.quizResults);
+    questionToShow < 4
+      ? setQuestionToShow(questionToShow + 1)
+      : calculateResults();
   }
 
   function calculateResults() {
@@ -136,16 +140,55 @@ function Quiz({ setHighestCat, setQuizOver }) {
 
   return (
     <div>
-      {questions.map((question, i) => (
+      {questionToShow === 0 && (
         <QuestionDisplay
-          question={question}
+          question={questions[0]}
           answers={answers}
-          i={i}
-          key={i}
+          i={0}
+          key={0}
           handleClick={handleClick}
         />
-      ))}
-      <button onClick={calculateResults}>See your results!</button>
+      )}
+
+      {questionToShow === 1 && (
+        <QuestionDisplay
+          question={questions[1]}
+          answers={answers}
+          i={1}
+          key={1}
+          handleClick={handleClick}
+        />
+      )}
+
+      {questionToShow === 2 && (
+        <QuestionDisplay
+          question={questions[2]}
+          answers={answers}
+          i={2}
+          key={2}
+          handleClick={handleClick}
+        />
+      )}
+
+      {questionToShow === 3 && (
+        <QuestionDisplay
+          question={questions[3]}
+          answers={answers}
+          i={3}
+          key={3}
+          handleClick={handleClick}
+        />
+      )}
+
+      {questionToShow === 4 && (
+        <QuestionDisplay
+          question={questions[4]}
+          answers={answers}
+          i={4}
+          key={4}
+          handleClick={handleClick}
+        />
+      )}
     </div>
   );
 }
