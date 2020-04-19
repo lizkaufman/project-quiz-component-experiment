@@ -73,6 +73,9 @@ function Quiz({ setHighestCat, setQuizOver }) {
   //useReducer that adds the category of each answer:
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  //state that tracks which question to display:
+  const [questionToShow, setQuestionToShow] = useState(0);
+
   //function that adds the category and then counts the answer:
   function handleClick(category) {
     if (category === 0) {
@@ -88,6 +91,9 @@ function Quiz({ setHighestCat, setQuizOver }) {
       dispatch({ type: 'add-events-choice' });
     }
     console.log(state.quizResults);
+    questionToShow < 4
+      ? setQuestionToShow(questionToShow + 1)
+      : calculateResults();
   }
 
   function calculateResults() {
@@ -136,16 +142,55 @@ function Quiz({ setHighestCat, setQuizOver }) {
 
   return (
     <div>
-      {questions.map((question, i) => (
+      {questionToShow === 0 && (
         <QuestionDisplay
-          question={question}
+          question={questions[0]}
           answers={answers}
-          i={i}
-          key={i}
+          i={0}
+          key={0}
           handleClick={handleClick}
         />
-      ))}
-      <button onClick={calculateResults}>See your results!</button>
+      )}
+
+      {questionToShow === 1 && (
+        <QuestionDisplay
+          question={questions[1]}
+          answers={answers}
+          i={1}
+          key={1}
+          handleClick={handleClick}
+        />
+      )}
+
+      {questionToShow === 2 && (
+        <QuestionDisplay
+          question={questions[2]}
+          answers={answers}
+          i={2}
+          key={2}
+          handleClick={handleClick}
+        />
+      )}
+
+      {questionToShow === 3 && (
+        <QuestionDisplay
+          question={questions[3]}
+          answers={answers}
+          i={3}
+          key={3}
+          handleClick={handleClick}
+        />
+      )}
+
+      {questionToShow === 4 && (
+        <QuestionDisplay
+          question={questions[4]}
+          answers={answers}
+          i={4}
+          key={4}
+          handleClick={handleClick}
+        />
+      )}
     </div>
   );
 }
