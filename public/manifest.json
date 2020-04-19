@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Volun-Tinder Quiz",
+  "name": "Testing the Volun-Tinder quiz component",
   "icons": [
     {
       "src": "favicon.ico",
