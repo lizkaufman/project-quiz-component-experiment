@@ -32,6 +32,7 @@
 //TODO: Make submit button for end of quiz ✅
 //TODO: Create function to count choices after all questions are answered and return category with the highest total ✅
 //TODO: Tie this function to submit button ✅
+//TODO: Once submit button is pressed, stop showing the quiz and switch to the resulting category's page instead
 
 //---MAPCEPTION:---
 
@@ -68,11 +69,9 @@ function reducer(state, action) {
   }
 }
 
-function Quiz() {
+function Quiz({ setHighestCat, setQuizOver }) {
   //useReducer that adds the category of each answer:
   const [state, dispatch] = useReducer(reducer, initialState);
-  //state that holds the highest-counted category at end of quiz:
-  const [highestCat, setHighestCat] = useState('');
 
   //function that adds the category and then counts the answer:
   function handleClick(category) {
@@ -132,6 +131,7 @@ function Quiz() {
     }
     console.log(result.category);
     setHighestCat(result.category);
+    setQuizOver(true);
   }
 
   return (
