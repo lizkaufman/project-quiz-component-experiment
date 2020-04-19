@@ -8,15 +8,31 @@ import React from 'react';
 
 import AnswerChoice from '../AnswerChoice/index';
 
-function QuestionDisplay({ question, answers, i }) {
+function QuestionDisplay({ question, answers, i, handleClick }) {
   return (
     <div>
       <h2>{question}</h2>
       <ul>
-        <AnswerChoice answerChoice={answers[i]} category={0} />
-        <AnswerChoice answerChoice={answers[i]} category={1} />
-        <AnswerChoice answerChoice={answers[i]} category={2} />
-        <AnswerChoice answerChoice={answers[i]} category={3} />
+        <AnswerChoice
+          answerChoice={answers[i]}
+          category={0}
+          handleClick={handleClick}
+        />
+        <AnswerChoice
+          answerChoice={answers[i]}
+          category={1}
+          handleClick={handleClick}
+        />
+        <AnswerChoice
+          answerChoice={answers[i]}
+          category={2}
+          handleClick={handleClick}
+        />
+        <AnswerChoice
+          answerChoice={answers[i]}
+          category={3}
+          handleClick={handleClick}
+        />
       </ul>
     </div>
   );

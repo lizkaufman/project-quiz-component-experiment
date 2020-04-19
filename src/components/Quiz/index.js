@@ -23,79 +23,129 @@
 
 //---THE GUTS:---
 
-//TODO: Create dummy data
+//TODO: Create questions and answers ✅
 
-//TODO: Use useReducer hook; create state to store choice categories (empty array) - the keys from the answer objects
-//TODO: Reducer function for onClick event when answer choice is clicked: should access the key of the answer object and set that to the end of the results array (with the rest of the array spread out)
+//TODO: Use useReducer hook; create state to store choice categories (empty array) ✅
+//TODO: Reducer function for onClick event when answer choice is clicked: should access answer category and set that to the end of the results array (with the rest of the array spread out) ✅
+//TODO: Hand reducer's dispatch down through to answer choice via a function executed onClick ✅
 
-//TODO: Create function to count choices after all questions are answered and return category with the highest total
+//TODO: Make submit button for end of quiz ✅
+//TODO: Create function to count choices after all questions are answered and return category with the highest total ✅
+//TODO: Tie this function to submit button ✅
 
 //---MAPCEPTION:---
 
-//TODO: Render list of each question (map over question array and render value of each object)
-//TODO: Within map function of question, access the dummyAnswers array, picks the object with the right question number key, and then maps over the answer choices array, rendering each value
+//TODO: Render list of each question (map over question array and render value of each object) ✅
+//TODO: Map over question array to display each question ✅
+//TODO: Map over answer choices to display each choice (with category number) ✅
 //TODO: Once the map functions above are working, add a questionNumber state and conditional render to show one question at a time
 
 // **********************************************************
 
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 
 import QuestionDisplay from '../QuestionDisplay/index';
 
-const questions = [
-  `1. What's your idea of a great way to spend a Saturday?`,
-  `2. It's film night! What are you watching?`,
-  `3. Let's have a dance. What's the soundtrack?`,
-  '4. If you could teleport anywhere right now, where would you go?',
-  '5. What annoys you the most?',
-];
+import { questions, answers } from '../../libs/questionData';
 
-//CATEGORIES FOR EACH ANSWER ARRAY:
-//index 0 = animals
-//index 1 = environment
-//index 2 = localGroups
-//index 3 = events
+//initial state for array that stores answer categories
+const initialState = { quizResults: [] };
 
-const answers = [
-  [
-    'Spending some quality time with my pet',
-    'A scenic stroll at a national park, with the occasional stop to pick up litter',
-    'A picnic lunch in the park and then an afternoon tending a community garden',
-    'A cool new music festival with my friends',
-  ],
-
-  ['Marley and Me', 'Planet Earth', 'The Full Monty', 'This Is Spinal Tap'],
-
-  ['Who Let the Dogs Out?', 'Under the Sea', 'YMCA', 'Cabaret'],
-
-  [
-    'In the Sierra Madre mountains, taking in the spectacle of the monarch butterfly migration',
-    'A breathtaking kayak down the Norwegian fjords',
-    'Dressed to the nines a glamorous charity ball',
-    'Down the front at the Glastonbury Pyramid stage',
-  ],
-
-  [
-    'People forgetting that a pet is for life, not just for Christmas',
-    'Seeing someone drop chewing gum on the ground when the bin is. Right. There!',
-    'Seeing empty storefronts where there used to be cool local spots',
-    'Tall people blocking my view at an absolute dream gig',
-  ],
-];
+//reducer function to add category for each answer choice:
+function reducer(state, action) {
+  const { type } = action;
+  switch (type) {
+    case 'add-animal-choice':
+      return { quizResults: [...state.quizResults, 'animals'] };
+    case 'add-environment-choice':
+      return { quizResults: [...state.quizResults, 'environment'] };
+    case 'add-localGroups-choice':
+      return { quizResults: [...state.quizResults, 'localGroups'] };
+    case 'add-events-choice':
+      return { quizResults: [...state.quizResults, 'events'] };
+    default:
+      return { quizResults: [state.quizResults] };
+  }
+}
 
 function Quiz() {
-  const [results, setResults] = useState([]);
+  //useReducer that adds the category of each answer:
+  const [state, dispatch] = useReducer(reducer, initialState);
+  //state that holds the highest-counted category at end of quiz:
+  const [highestCat, setHighestCat] = useState('');
 
-  function addAnswer() {
-    let newAnswer = '';
-    setResults([...results, newAnswer]);
+  //function that adds the category and then counts the answer:
+  function handleClick(category) {
+    if (category === 0) {
+      dispatch({ type: 'add-animal-choice' });
+    }
+    if (category === 1) {
+      dispatch({ type: 'add-environment-choice' });
+    }
+    if (category === 2) {
+      dispatch({ type: 'add-localGroups-choice' });
+    }
+    if (category === 3) {
+      dispatch({ type: 'add-events-choice' });
+    }
+    console.log(state.quizResults);
+  }
+
+  function calculateResults() {
+    console.log('button pressed');
+    //array w/ objects w/ counters for each category:
+    let categoryResults = [
+      { category: 'animals', count: 0 },
+      { category: 'environment', count: 0 },
+      { category: 'localGroups', count: 0 },
+      { category: 'events', count: 0 },
+    ];
+    //for loop that iterates through results array to count categories:
+    for (let i = 0; i < state.quizResults.length; i++) {
+      switch (state.quizResults[i]) {
+        case 'animals':
+          categoryResults[0].count = categoryResults[0].count + 1;
+          break;
+        case 'environment':
+          categoryResults[1].count = categoryResults[1].count + 1;
+          break;
+        case 'localGroups':
+          categoryResults[2].count = categoryResults[2].count + 1;
+          break;
+        case 'events':
+          categoryResults[3].count = categoryResults[3].count + 1;
+          break;
+        default:
+          return;
+      }
+    }
+    console.log(categoryResults);
+    //return the category with the highest count:
+    let highestCatSoFar = 0;
+    let result;
+    for (let i = 0; i < categoryResults.length; i++) {
+      //checks if each count is higher than the last; if so, it overwrites that object in the results variable
+      if (categoryResults[i].count > highestCatSoFar) {
+        result = categoryResults[i];
+        highestCatSoFar = categoryResults[i].count;
+      }
+    }
+    console.log(result.category);
+    setHighestCat(result.category);
   }
 
   return (
     <div>
       {questions.map((question, i) => (
-        <QuestionDisplay question={question} answers={answers} i={i} key={i} />
+        <QuestionDisplay
+          question={question}
+          answers={answers}
+          i={i}
+          key={i}
+          handleClick={handleClick}
+        />
       ))}
+      <button onClick={calculateResults}>See your results!</button>
     </div>
   );
 }
