@@ -27,6 +27,7 @@
 
 //TODO: Use useReducer hook; create state to store choice categories (empty array) - the keys from the answer objects
 //TODO: Reducer function for onClick event when answer choice is clicked: should access the key of the answer object and set that to the end of the results array (with the rest of the array spread out)
+//TODO: Hand reducer down through to answer choice
 
 //TODO: Create function to count choices after all questions are answered and return category with the highest total
 
@@ -38,63 +39,66 @@
 
 // **********************************************************
 
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 
 import QuestionDisplay from '../QuestionDisplay/index';
 
-const questions = [
-  `1. What's your idea of a great way to spend a Saturday?`,
-  `2. It's film night! What are you watching?`,
-  `3. Let's have a dance. What's the soundtrack?`,
-  '4. If you could teleport anywhere right now, where would you go?',
-  '5. What annoys you the most?',
-];
+import { questions, answers } from '../../libs/questionData';
 
-//CATEGORIES FOR EACH ANSWER ARRAY:
-//index 0 = animals
-//index 1 = environment
-//index 2 = localGroups
-//index 3 = events
+//CATEGORIES FOR EACH ANSWER:
+//0 = animals
+//1 = environment
+//2 = localGroups
+//3 = events
 
-const answers = [
-  [
-    'Spending some quality time with my pet',
-    'A scenic stroll at a national park, with the occasional stop to pick up litter',
-    'A picnic lunch in the park and then an afternoon tending a community garden',
-    'A cool new music festival with my friends',
-  ],
+const initialState = { quizResults: [] };
 
-  ['Marley and Me', 'Planet Earth', 'The Full Monty', 'This Is Spinal Tap'],
-
-  ['Who Let the Dogs Out?', 'Under the Sea', 'YMCA', 'Cabaret'],
-
-  [
-    'In the Sierra Madre mountains, taking in the spectacle of the monarch butterfly migration',
-    'A breathtaking kayak down the Norwegian fjords',
-    'Dressed to the nines a glamorous charity ball',
-    'Down the front at the Glastonbury Pyramid stage',
-  ],
-
-  [
-    'People forgetting that a pet is for life, not just for Christmas',
-    'Seeing someone drop chewing gum on the ground when the bin is. Right. There!',
-    'Seeing empty storefronts where there used to be cool local spots',
-    'Tall people blocking my view at an absolute dream gig',
-  ],
-];
+function reducer(state, action) {
+  const { type } = action;
+  console.log(action);
+  switch (type) {
+    case 'add-animal-choice':
+      return { quizResults: [...state.quizResults, 'animals'] };
+    case 'add-environment-choice':
+      return { quizResults: [...state.quizResults, 'environment'] };
+    case 'add-localGroups-choice':
+      return { quizResults: [...state.quizResults, 'localGroups'] };
+    case 'add-events-choice':
+      return { quizResults: [...state.quizResults, 'events'] };
+    default:
+      return { quizResults: [state.quizResults] };
+  }
+}
 
 function Quiz() {
-  const [results, setResults] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  function addAnswer() {
-    let newAnswer = '';
-    setResults([...results, newAnswer]);
+  function handleClick(category) {
+    if (category === 0) {
+      dispatch({ type: 'add-animal-choice' });
+    }
+    if (category === 1) {
+      dispatch({ type: 'add-environment-choice' });
+    }
+    if (category === 2) {
+      dispatch({ type: 'add-localGroups-choice' });
+    }
+    if (category === 3) {
+      dispatch({ type: 'add-events-choice' });
+    }
+    console.log(state.quizResults);
   }
 
   return (
     <div>
       {questions.map((question, i) => (
-        <QuestionDisplay question={question} answers={answers} i={i} key={i} />
+        <QuestionDisplay
+          question={question}
+          answers={answers}
+          i={i}
+          key={i}
+          handleClick={handleClick}
+        />
       ))}
     </div>
   );
