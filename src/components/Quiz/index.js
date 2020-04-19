@@ -34,10 +34,10 @@
 
 //---MAPCEPTION:---
 
-//TODO: Render list of each question (map over question array and render value of each object) ✅
-//TODO: Map over question array to display each question ✅
+//TODO: Use questions array to render each question ✅
+//TODO: Use answers array to display each answer (using the question number to pick the right answer set!) ✅
 //TODO: Map over answer choices to display each choice (with category number) ✅
-//TODO: Once the map functions above are working, add a questionNumber state and conditional render to show one question at a time ✅
+//TODO: Once the functions above are working, add a questionNumber state and conditional render to show one question at a time ✅
 
 // **********************************************************
 
