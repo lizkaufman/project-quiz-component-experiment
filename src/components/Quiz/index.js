@@ -29,9 +29,9 @@
 //TODO: Reducer function for onClick event when answer choice is clicked: should access answer category and set that to the end of the results array (with the rest of the array spread out) ✅
 //TODO: Hand reducer's dispatch down through to answer choice via a function executed onClick ✅
 
-//TODO: Make submit button for end of quiz
-//TODO: Create function to count choices after all questions are answered and return category with the highest total
-//TODO: Tie this function to submit button
+//TODO: Make submit button for end of quiz ✅
+//TODO: Create function to count choices after all questions are answered and return category with the highest total ✅
+//TODO: Tie this function to submit button ✅
 
 //---MAPCEPTION:---
 
