@@ -29,17 +29,15 @@
 //TODO: Reducer function for onClick event when answer choice is clicked: should access answer category and set that to the end of the results array (with the rest of the array spread out) ✅
 //TODO: Hand reducer's dispatch down through to answer choice via a function executed onClick ✅
 
-//TODO: Make submit button for end of quiz ✅
 //TODO: Create function to count choices after all questions are answered and return category with the highest total ✅
-//TODO: Tie this function to submit button ✅
-//TODO: Once submit button is pressed, stop showing the quiz and switch to the resulting category's page instead
+//TODO: Deploy this function once the last question is answered ✅
 
 //---MAPCEPTION:---
 
 //TODO: Render list of each question (map over question array and render value of each object) ✅
 //TODO: Map over question array to display each question ✅
 //TODO: Map over answer choices to display each choice (with category number) ✅
-//TODO: Once the map functions above are working, add a questionNumber state and conditional render to show one question at a time
+//TODO: Once the map functions above are working, add a questionNumber state and conditional render to show one question at a time ✅
 
 // **********************************************************
 
@@ -76,7 +74,7 @@ function Quiz({ setHighestCat, setQuizOver }) {
   //state that tracks which question to display:
   const [questionToShow, setQuestionToShow] = useState(0);
 
-  //function that adds the category and then counts the answer:
+  //function that adds the category and then counts the answer (and, once questionToShow reaches 4, triggers calculateResults):
   function handleClick(category) {
     if (category === 0) {
       dispatch({ type: 'add-animal-choice' });
