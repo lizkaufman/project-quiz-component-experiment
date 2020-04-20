@@ -1,6 +1,8 @@
 # Experimenting - designing a quiz component
 
-Working out how to design a personality quiz component as part of our School of Code final project (and finally getting my head around how to make a useReducer!)
+I experimented and worked out how to design a personality quiz component as part of our School of Code final project (and finally got my head around how to make a useReducer - hooray!).
+
+The components from this repo have now been woven into the main project repo.
 
 ## To run:
 
